@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom PC Build Form | VoltEdge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    });
+  </script>
+  <script>
+    function sendMail(event) {
+      event.preventDefault();
+
+      const formData = {
+		    
+        name: document.querySelector('[name="user_name"]').value,
+        email: document.querySelector('[name="user_email"]').value,
+        phone: document.querySelector('[name="user_phone"]').value,
+        alt_phone: document.querySelector('[name="user_alt_phone"]').value,
+        pincode: document.querySelector('[name="user_pincode"]').value,
+        budget: document.querySelector('[name="user_budget"]').value,
+        usecase: document.querySelector('[name="user_usecase"]').value,
+        os: document.querySelector('[name="user_os"]').value,
+        rgb: document.querySelector('[name="user_rgb"]').value,
+        notes: document.querySelector('[name="user_notes"]').value,
+        order_id: 'VE' + Date.now()
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbyZ5ivTRjkbbeyUFkEyXVKjiTECQUS3_qfsVFYm0wM0PpBSI2c1PBDmaVcvmHAjakc/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(() => {
+        alert("Request submitted successfully!");
+        document.getElementById("buildForm").reset();
+      })
+      .catch(err => {
+        alert("Something went wrong. Please try again later.");
+        console.error(err);
+      });
+    }
+  </script>
+</head>
+<body class="bg-gray-900 text-white">
+  <!-- Header: Matches main site layout -->
+  <header class="bg-gradient-to-br from-slate-200 via-slate-300 to-slate-200 text-gray-800 shadow-lg py-4 px-6 flex justify-between items-center">
+    <a href="index.html">
+      <img src="logo-bg.png" alt="VoltEdge Logo" class="h-12 w-auto">
+    </a>
+    <nav>
+      <ul class="flex space-x-6 font-semibold">
+        <li><a href="index.html" class="hover:text-blue-500 transition">Home</a></li>
+        <li><a href="#" class="hover:text-blue-500 transition">PC Builds</a></li>
+        <li><a href="form.html" class="hover:text-blue-500 transition">Custom Build</a></li>
+        <li><a href="contactus.html" class="hover:text-blue-500 transition">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="max-w-3xl mx-auto px-6 py-16 fade-in">
+    <h1 class="text-4xl font-bold mb-10 text-center">Build Request Form</h1>
+    <form id="buildForm" class="space-y-6" onsubmit="sendMail(event)">
+      <div>
+        <label class="block mb-2">Full Name</label>
+        <input type="text" name="user_name" required class="w-full p-3 rounded bg-gray-800 text-white">
+      </div>
+      <div>
+        <label class="block mb-2">Email</label>
+        <input type="email" name="user_email" required class="w-full p-3 rounded bg-gray-800 text-white">
+      </div>
+      <div>
+        <label class="block mb-2">Phone Number</label>
+        <input type="tel" name="user_phone" required class="w-full p-3 rounded bg-gray-800 text-white">
+      </div>
+      <div>
+        <label class="block mb-2">Alternative Phone (optional)</label>
+        <input type="tel" name="user_alt_phone" class="w-full p-3 rounded bg-gray-800 text-white">
+      </div>
+      <div>
+        <label class="block mb-2">Pincode</label>
+        <input type="text" name="user_pincode" required class="w-full p-3 rounded bg-gray-800 text-white">
+      </div>
+      <div>
+        <label class="block mb-2">Budget (₹)</label>
+        <input type="number" name="user_budget" required class="w-full p-3 rounded bg-gray-800 text-white">
+      </div>
+      <div>
+        <label class="block mb-2">Type of Use</label>
+        <select name="user_usecase" required class="w-full p-3 rounded bg-gray-800 text-white">
+          <option>Gaming</option>
+          <option>Content Creation</option>
+          <option>Office Work</option>
+          <option>General Use</option>
+        </select>
+      </div>
+      <div>
+        <label class="block mb-2">Preferred OS</label>
+        <select name="user_os" required class="w-full p-3 rounded bg-gray-800 text-white">
+          <option>Windows</option>
+          <option>Linux</option>
+          <option>Dual Boot</option>
+        </select>
+      </div>
+      <div>
+        <label class="block mb-2">RGB Preference</label>
+        <select name="user_rgb" required class="w-full p-3 rounded bg-gray-800 text-white">
+          <option>RGB is a must!</option>
+          <option>Minimal (no lights)</option>
+          <option>Don't care</option>
+        </select>
+      </div>
+      <div>
+        <label class="block mb-2">Extra Notes</label>
+        <textarea name="user_notes" rows="5" class="w-full p-3 rounded bg-gray-800 text-white" placeholder="Anything specific you want in your build..."></textarea>
+      </div>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-3 rounded shadow-lg">
+        Submit Request
+      </button>
+    </form>
+  </div>
+  <!-- Footer: Premium styled footer -->
+  <footer class="bg-blue-950 text-white py-8 px-6 mt-20">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+      <p class="text-sm">© 2025 VoltEdge Builds. All rights reserved.</p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="https://www.instagram.com/voltedgebuilds/profilecard/?igsh=MXJ2YnBvbzMzeXV6dA==" class="hover:text-blue-400">Instagram</a>
+        <a href="https://youtube.com/@voltedgebuilds?si=w4EubKaFgpwQSYTv" class="hover:text-blue-400">YouTube</a>
+        <a href="https://www.facebook.com/share/1Ea1o2Hj3Z/" class="hover:text-blue-400">Facebook</a>
+        <a href="https://x.com/voltedgebuilds?t=Tj9brPTalBvg7F8SgwsDow&s=03" class="hover:text-blue-400">X(twitter)</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
