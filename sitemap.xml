@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    
    <url>
-      <loc>https://voltedgebuilds.github.io/builds/</loc>
+      <loc>https://voltnexis.github.io/builds/</loc>
       <priority>1.0</priority>
       <changefreq>daily</changefreq>
    </url>
 
    <url>
-      <loc>https://voltedgebuilds.github.io/builds/contact.html</loc>
+      <loc>https://voltnexis.github.io/builds/contactus.html</loc>
       <priority>0.7</priority>
       <changefreq>monthly</changefreq>
    </url>
